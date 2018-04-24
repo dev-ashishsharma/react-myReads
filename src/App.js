@@ -30,6 +30,7 @@ class BooksApp extends React.Component {
   handleStatusChange = (book, value) => {
     let updatedBook = book
     updatedBook.shelf =  value
+    /* This newBookShelf code snippet was learned from Brandon's code */
     let newBookShelf = this.state.bookShelf.filter((bk) => {
       return bk.id !== book.id
     })

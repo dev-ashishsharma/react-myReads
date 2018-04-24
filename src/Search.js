@@ -29,6 +29,7 @@ class Search extends Component {
           else {
             searchResults.map((searchedItem) => {
               this.props.booksList.find((bk) => {
+                /* This find code snipet was learned from Brandon's code */
                 if (bk.id === searchedItem.id) {
                   searchedItem.shelf = bk.shelf
                 }
