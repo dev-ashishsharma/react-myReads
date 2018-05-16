@@ -2,8 +2,9 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Bookshelf from './Bookshelf'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, Switch} from 'react-router-dom'
 import Search from './Search'
+import NoMatch from './NoMatch'
 
 class BooksApp extends React.Component {
   constructor (props) {
@@ -52,33 +53,36 @@ class BooksApp extends React.Component {
     })
     return (
       <div className='app'>
-        <Route path='/search' render={() => (
-          <Search
-            booksList={this.state.bookShelf}
-            handleChange={(book,value) => {
-              this.handleStatusChange(book,value)
-          }}
-          />
-        )}/>
-        <Route exact path='/' render={() => (
-          <div className='all-books'>
-            <div className='list-books-title'>
-              <h1>MyReads</h1>
-            </div>
-            <div className='list-books'>
-              <div className='list-content'>
-                <div>
-                  <Bookshelf booksList={currentlyReading} shelfName="Currently Reading" handleChange={(book,value) => this.handleStatusChange(book,value)} />
-                  <Bookshelf booksList={wantToRead} shelfName="Want to Read" handleChange={(book,value) => this.handleStatusChange(book,value)} />
-                  <Bookshelf booksList={haveRead} shelfName="Have Read" handleChange={(book,value) => this.handleStatusChange(book,value)} />
+        <Switch>
+          <Route exact path='/' render={() => (
+            <div className='all-books'>
+              <div className='list-books-title'>
+                <h1>MyReads</h1>
+              </div>
+              <div className='list-books'>
+                <div className='list-content'>
+                  <div>
+                    <Bookshelf booksList={currentlyReading} shelfName="Currently Reading" handleChange={(book,value) => this.handleStatusChange(book,value)} />
+                    <Bookshelf booksList={wantToRead} shelfName="Want to Read" handleChange={(book,value) => this.handleStatusChange(book,value)} />
+                    <Bookshelf booksList={haveRead} shelfName="Have Read" handleChange={(book,value) => this.handleStatusChange(book,value)} />
+                  </div>
                 </div>
               </div>
+              <div className='open-search'>
+                <Link to='/search'> Add a Book </Link>
+              </div>
             </div>
-            <div className='open-search'>
-              <Link to='/search'> Add a Book </Link>
-            </div>
-          </div>
-        )}/>
+          )}/>
+          <Route path='/search' render={() => (
+            <Search
+              booksList={this.state.bookShelf}
+              handleChange={(book,value) => {
+                this.handleStatusChange(book,value)
+            }}
+            />
+          )}/>
+          <Route component={NoMatch} />
+        </Switch>
       </div>
     )
   }

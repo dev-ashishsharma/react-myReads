@@ -10,6 +10,7 @@ class Bookshelf extends Component {
   }
 
   handleChange = (book, value) => {
+    console.log(book)
     this.props.handleChange(book, value)
   }
 
